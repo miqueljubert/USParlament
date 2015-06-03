@@ -1614,9 +1614,12 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_calculateCommunitiesButtonActionPerformed
 
     private void compareButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compareButtonActionPerformed
-        try {
             JSONObject jInfo = pc.compareFunction();
-            String msg = new String();
+            if(jInfo.getJSONByKey("Exception")!=null){
+                JOptionPane.showMessageDialog(new JFrame(), "Invalid Partitions, remember that each partition must map all MPs");
+                return;
+            }
+            String msg;
             if(!jInfo.getJSONByKey("Best modularity").equals(jInfo.getJSONByKey("Other modularity"))) {
                 msg = "Best partition: " + jInfo.getJSONByKey("Best partition") + "\n";
 
@@ -1626,10 +1629,6 @@ public class MainView extends javax.swing.JFrame {
             msg += "Best modularity: " + jInfo.getJSONByKey("Best modularity") + "\n";
             msg += "Other modularity: " + jInfo.getJSONByKey("Other modularity") + "\n";
             JOptionPane.showMessageDialog(new JFrame(), msg);
-        }catch(IllegalArgumentException iae){
-
-            JOptionPane.showMessageDialog(new JFrame(), "Invalid Partitions, remember that each partition must map all nodes");
-        }
     }//GEN-LAST:event_compareButtonActionPerformed
 
     private void list1UseCurrentPartitionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_list1UseCurrentPartitionButtonActionPerformed
